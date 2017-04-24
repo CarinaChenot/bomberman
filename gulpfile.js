@@ -8,9 +8,10 @@ const autoprefixer = require('gulp-autoprefixer')
 const sourcemaps   = require('gulp-sourcemaps')
 const sass         = require('gulp-sass')
 const babel        = require('gulp-babel')
+const concat       = require('gulp-concat')
 
 
-let config = {
+const config = {
     'src' : 'src/',
     'dist': 'dist/'
 }
@@ -44,27 +45,31 @@ gulp.task('sass', () => {
 
 
 // JS task
-gulp.task('js', () => {
-    return gulp.src([config.src + 'js/classes/*.js',config.src + 'js/*.js'])
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(minify({
-            ext:{
-                src:'.js',
-                min:'.min.js'
-          },
-          ignoreFiles: ['.min.js'],
-          noSource: false
-        }))
-        .pipe(gulp.dest(config.dist + 'assets/js'))
-        .pipe(connect.reload())
+gulp.task('es6', () => {
+  return gulp.src([config.src + 'js/classes/*.js', config.src + 'js/main.js'])
+  .pipe(plumber({
+    errorHandler: reportError
+  }))
+  .pipe(sourcemaps.init())
+  .pipe(babel({
+    presets: ['es2015']
+  }))
+  .pipe(concat('main.js'))
+  .pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest('dist/js'))
 })
+
+function reportError (error) {
+  notify().write({
+    title: 'Gulp: ES6',
+    message: 'Error line : ' + error.loc.line + ' in : ' + error.fileName.split('/')[error.fileName.split('/').length - 1]
+  })
+}
 
 // Wath task
 gulp.task('watch', () => {
     gulp.watch(config.src + 'sass/**/*.scss', ['sass'])
-    gulp.watch(config.src + 'js/*.js', ['js'])
+    gulp.watch([config.src + 'js/classes/*.js', config.src + 'js/*.js'], ['js'])
 })
 
 gulp.task('default', ['connect', 'watch'], () => {

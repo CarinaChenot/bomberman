@@ -22,5 +22,8 @@
     "gulp-sourcemaps": "^2.4.1",
     "install": "^0.8.7",
     "npm": "^4.3.0"
+  },
+  "dependencies": {
+    "gulp-concat": "^2.6.1"
   }
 }
