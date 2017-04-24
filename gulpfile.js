@@ -40,13 +40,12 @@ gulp.task('sass', () => {
         }))
         .pipe(gulp.dest(config.dist + 'assets/css'))
         .pipe(connect.reload())
-        .pipe(notify('SASS compiled: <%= file.relative %>'))
 })
 
 
 // JS task
 gulp.task('js', () => {
-    return gulp.src(config.src + 'js/*.js')
+    return gulp.src([config.src + 'js/classes/*.js',config.src + 'js/*.js'])
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -60,7 +59,6 @@ gulp.task('js', () => {
         }))
         .pipe(gulp.dest(config.dist + 'assets/js'))
         .pipe(connect.reload())
-        .pipe(notify('JS compiled: <%= file.relative %>'))
 })
 
 // Wath task
