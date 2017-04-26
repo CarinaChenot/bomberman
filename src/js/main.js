@@ -1,1 +1,2 @@
-const hello = 'world'
+const socket = new Live()
+socket.start()

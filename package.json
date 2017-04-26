@@ -2,9 +2,9 @@
   "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "gulpfile.js",
+  "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "node server.js"
   },
   "author": "Carina Chenot",
   "license": "MIT",
@@ -20,10 +20,10 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
-    "install": "^0.8.7",
-    "npm": "^4.3.0"
+    "gulp-concat": "^2.6.1"
   },
   "dependencies": {
-    "gulp-concat": "^2.6.1"
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
   }
 }
