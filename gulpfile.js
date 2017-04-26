@@ -69,7 +69,7 @@ function reportError (error) {
 // Wath task
 gulp.task('watch', () => {
     gulp.watch(config.src + 'sass/**/*.scss', ['sass'])
-    gulp.watch([config.src + 'js/classes/*.js', config.src + 'js/*.js'], ['js'])
+    gulp.watch([config.src + 'js/classes/*.js', config.src + 'js/*.js'], ['es6'])
 })
 
 gulp.task('default', ['connect', 'watch'], () => {
