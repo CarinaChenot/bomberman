@@ -1,10 +1,11 @@
 {
-  "name": "",
+  "name": "bomberman",
   "version": "1.0.0",
   "description": "",
-  "main": "",
   "scripts": {
-    "server": "node server.js"
+    "server": "node server.js",
+    "app": "electron .",
+    "build": "electron-packager . Bomberman --platform=darwin --arch=x64 --overwrite=true --out=../bomberman"
   },
   "author": "Carina Chenot",
   "license": "MIT",
@@ -20,7 +21,10 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
-    "gulp-concat": "^2.6.1"
+    "gulp-concat": "^2.6.1",
+    "electron": "^1.0.1",
+    "electron-packager": "^8.6.0",
+    "devtron": "^1.1.0"
   },
   "dependencies": {
     "express": "^4.15.2",
