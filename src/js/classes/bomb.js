@@ -3,33 +3,48 @@ class Bomb {
     this.player = player
     this.range = range
     this.pos = pos
-    this.delay = 3000
     this.exploded = false
+    this.delay = setTimeout(() => {
+      this.explode()
+    }, 3000)
+    this.domEl = document.createElement('div')
+    this.render()
   }
-  create() {
-    let bombDiv = document.createElement("div")
-    let bomb = document.createTextNode("BOMB")
-    bombDiv.appendChild(bomb)
-    document.getElementById('app').appendChild(bombDiv)
+  render() {
+    this.domEl.classList.add('bomb')
+    this.domEl.style.transform = 'translateX(' + this.pos.x + '0px) translateY(' + this.pos.y + '0px)'
+    document.getElementById('app').appendChild(this.domEl)
   }
   explode() {
     this.exploded = true
-
+    this.domEl.remove()
+    this.updateList()
   }
-  remove() {
-    document.getElementById('app').removeChild(this.bombImg)
+  updateList() {
+    // Remove exploded bombs from list
+    bombList = bombList.filter(function (elem) {
+      return !elem.exploded
+    })
   }
 }
 
-// player
-// new Bomb = (this.player, this.range, this.pos )
+// List of unexploded bombs on the map
+let bombList = []
 
-var pos = {
-  x: 3,
-  y: 5
+// Test function
+function newBomb() {
+  let pos = {
+    x: Math.floor(Math.random() * 50),
+    y: Math.floor(Math.random() * 50)
+  }
+  return bombList.push(new Bomb(1, 2, pos))
+
+  // To create bomb on the Player class
+  // return bombList.push(new Bomb(this.player, this.range, this.pos))
 }
 
-var bomb = new Bomb(1, 2, pos);
-bomb.create()
-
-console.log(bomb);
+newBomb()
+newBomb()
+newBomb()
+newBomb()
+newBomb()
