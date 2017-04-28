@@ -3,34 +3,20 @@ class Bomb {
     this.player = player
     this.range = range
     this.pos = pos
+    this.delay = 3000
     this.exploded = false
-    this.bombImg
-    this.
   }
   create() {
-    document.getElementById('app').append(this.test)
+    let bombDiv = document.createElement("div")
+    let bomb = document.createTextNode("BOMB")
+    bombDiv.appendChild(bomb)
+    document.getElementById('app').appendChild(bombDiv)
   }
   explode() {
     this.exploded = true
 
-    // for (var i = 0; i < range.length; i++) {
-    //   //Up
-    //   case[this.pos.y - i] = exploded
-    //   //Down
-    //   case[this.pos.y + i] = exploded
-    //   //Left
-    //   case[this.pos.x - i] = exploded
-    //   //Right
-    //   case[this.pos.x + i] = exploded
-    //
-    // }
-
-
   }
-  render(){
-
-  }
-  remove(){
+  remove() {
     document.getElementById('app').removeChild(this.bombImg)
   }
 }
@@ -44,5 +30,6 @@ var pos = {
 }
 
 var bomb = new Bomb(1, 2, pos);
+bomb.create()
 
 console.log(bomb);
