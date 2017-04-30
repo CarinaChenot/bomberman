@@ -45,7 +45,8 @@ class Cell {
         this.x     = x
         this.y     = y
         this.solid = solid
-        if((checkPoint([x,y], map.spawn_point) && !this.solid)){           
+        this.bomb = null
+        if((checkPoint([x,y], map.spawn_point) && !this.solid)){
             this.spawn = true
         }
         else if(checkPoint([(x),(y+1)], map.spawn_point) && !this.solid){
@@ -86,6 +87,9 @@ class Cell {
         this.el_cell.className = 'cell'
         this.el_cell.style.width = map.cell_size + 'px'
         this.el_cell.style.height = map.cell_size + 'px'
+
+        this.content = this.el_cell.appendChild(document.createElement('div'))
+        this.content.className = 'content'
 
         if(this.solid){
             this.el_cell.className = 'cell solid'
