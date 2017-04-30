@@ -25,6 +25,12 @@ gulp.task('connect', () => {
     })
 })
 
+// Relocate img task
+gulp.task('img', () => {
+  gulp.src(config.src + 'img/**.*')
+      .pipe(gulp.dest(config.dist + 'assets/img'));
+});
+
 // CSS task
 gulp.task('sass', () => {
     return gulp.src(config.src + 'sass/*.scss')
@@ -56,7 +62,7 @@ gulp.task('es6', () => {
   }))
   .pipe(concat('main.js'))
   .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('dist/js'))
+  .pipe(gulp.dest(config.dist + 'assets/js'))
 })
 
 function reportError (error) {
@@ -68,6 +74,7 @@ function reportError (error) {
 
 // Wath task
 gulp.task('watch', () => {
+    gulp.watch(config.src + 'img/**/*.*', ['img'])
     gulp.watch(config.src + 'sass/**/*.scss', ['sass'])
     gulp.watch([config.src + 'js/classes/*.js', config.src + 'js/*.js'], ['es6'])
 })
