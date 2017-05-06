@@ -9,21 +9,21 @@ class Live {
 
     start() {
         let that = this
-        
+
         document.addEventListener('keypress', e => {
             switch (e.keyCode) {
                 case 122:
                     that.pos.y++;
-                    break;    
+                    break;
                 case 113:
                     that.pos.x--;
-                    break;    
+                    break;
                 case 115:
                     that.pos.y--;
                     break;
                 case 100:
                     that.pos.x++;
-                    break; 
+                    break;
             }
             that.socket.emit('controls', that.pos)
         })
