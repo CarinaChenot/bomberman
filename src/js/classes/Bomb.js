@@ -80,7 +80,7 @@ function newBomb() {
   }
   map.map[pos.y][pos.x].bomb = new Bomb(1, 1, pos)
 }
-newBomb()
+// newBomb()
 
 
 

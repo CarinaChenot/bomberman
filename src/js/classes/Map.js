@@ -34,7 +34,7 @@ class Map {
     draw(){
         this.map.forEach(function(element) {
             element.forEach(function(cell) {
-                
+
             }, this)
         }, this)
     }
@@ -72,13 +72,13 @@ class Cell {
                 this.bonus = 'speed'
             }
             else if(random == 2){
-                this.bonus = 'range'                
+                this.bonus = 'range'
             }
             else if(random == 3){
-                this.bonus = 'number'                
+                this.bonus = 'number'
             }
             else if(random == 4){
-                this.bonus = 'control'               
+                this.bonus = 'control'
             }
         }
     }
@@ -139,3 +139,10 @@ function checkPoint(neddle,array){
     }
     return false
 }
+
+/*
+____ TO DO: ___
+- methode removeBonus que le character puisse appeler quand il est passé sur un bonus, elle enlève le bonus de la map et du DOM
+
+
+*/
