@@ -7,4 +7,6 @@
   margin: 0 6px;
   transform: scale(0.6);
   transform-origin: center;
+  transition: left .1s linear, top .1s linear;
+  //transition duration changed in js
 }
