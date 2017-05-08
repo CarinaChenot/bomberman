@@ -8,7 +8,6 @@ module.exports = {
     node: true
   },
   extends: 'eslint:recommended',
-  // extends: 'standard',
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module'
@@ -31,6 +30,6 @@ module.exports = {
     'no-multiple-empty-lines': 'error',
     'no-unused-expressions': 'error',
     'comma-spacing': ['error', { 'before': false, 'after': true }],
-    'key-spacing': ["error", { 'mode': 'strict' }]
+    'key-spacing': ['error', { 'mode': 'strict' }]
   }
 }
