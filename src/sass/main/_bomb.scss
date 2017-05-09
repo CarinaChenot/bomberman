@@ -1,6 +1,14 @@
 .bomb {
-  width: 20px;
-  height: 20px;
-  // background-image: url('../img/bomb-active.png');
-  background-image: url('../img/bomberman-sprite.png');
+  background-image: url('../img/bomb-src.png');
+  animation-name: awaiting;
+  animation-duration: 3s;
+}
+
+@keyframes awaiting {
+  from {
+    background-image: url('../img/bomb-src.png');
+  }
+  to {
+    background-image: url('../img/bomb-active.png');
+  }
 }
