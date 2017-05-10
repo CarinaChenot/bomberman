@@ -1,0 +1,14 @@
+.bomb {
+  background-image: url('../img/bomb-src.png');
+  animation-name: awaiting;
+  animation-duration: 3s;
+}
+
+@keyframes awaiting {
+  from {
+    background-image: url('../img/bomb-src.png');
+  }
+  to {
+    background-image: url('../img/bomb-active.png');
+  }
+}
