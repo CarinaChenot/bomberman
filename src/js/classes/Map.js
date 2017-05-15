@@ -3,8 +3,8 @@ class Map {
     this.size = size
     this.el   = el
     this.cell_size = 32
-    if (this.size[0] * this.cell_size > window.innerWidth * 0.8) {
-      this.cell_size = (window.innerWidth * 0.8) / this.size[0]
+    if (this.size[0] * this.cell_size > window.innerWidth) {
+      this.cell_size = Math.round((window.innerWidth) / this.size[0]);
     }
     this.el.style.width = this.size[0] * this.cell_size + 'px'
     this.el.style.height = this.size[1] * this.cell_size + 'px'
@@ -30,13 +30,6 @@ class Map {
       }
     }
   }
-  draw() {
-    this.map.forEach(function(element) {
-      element.forEach(function(cell) {
-
-      }, this)
-    }, this)
-  }
 }
 
 class Cell {
@@ -45,21 +38,18 @@ class Cell {
     this.y     = y
     this.solid = solid
     this.bomb = null
-    if ((checkPoint([x, y], map.spawn_point) && !this.solid)) {
+    if ((this.checkPoint([x, y], map.spawn_point) && !this.solid)) {
       this.spawn = true
-    } else if (checkPoint([(x), (y + 1)], map.spawn_point) && !this.solid) {
+    } else if (this.checkPoint([(x), (y + 1)], map.spawn_point) && !this.solid) {
       this.spawn = true
-    } else if (checkPoint([(x), (y - 1)], map.spawn_point) && !this.solid) {
+    } else if (this.checkPoint([(x), (y - 1)], map.spawn_point) && !this.solid) {
       this.spawn = true
-    } else if (checkPoint([(x + 1), (y)], map.spawn_point) && !this.solid) {
+    } else if (this.checkPoint([(x + 1), (y)], map.spawn_point) && !this.solid) {
       this.spawn = true
-    } else if (checkPoint([(x - 1), (y)], map.spawn_point) && !this.solid) {
+    } else if (this.checkPoint([(x - 1), (y)], map.spawn_point) && !this.solid) {
       this.spawn = true
     } else if (!this.solid) {
       this.destructible = true
-      this.el_destructible = document.createElement('div')
-      this.el_destructible.className = 'cell destructible'
-      this.el_destructible.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
 
       let random = Math.ceil(Math.random() * 12)
       if (random === 1) {
@@ -82,55 +72,43 @@ class Cell {
     if (this.solid) {
       this.el_cell.className = 'cell solid'
       this.el_cell.style.backgroundPosition = 100 * Math.floor(Math.random() * 4) + '% 0%'
-    } else {
+    }
+    else {
       this.content = this.el_cell.appendChild(document.createElement('div'))
       this.content.className = 'content'
       this.el_cell.style.backgroundPosition = 100 * Math.floor(Math.random() * 7) + '% 0%'
-    }
 
-    if (this.spawn) {
-      this.el_cell.className = 'cell spawn'
+      if(this.destructible) {
+        this.content.className += ' destructible'
+      }
+      else if(this.bonus !== undefined) {
+        this.content.className += ' bonus ' + this.bonus
+      }
     }
 
     this.el_cell.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
     map.el.appendChild(this.el_cell)
 
-    if (this.bonus !== undefined) {
-      this.el_bonus = document.createElement('div')
-      this.el_bonus.className = 'cell bonus ' + this.bonus
-      this.el_bonus.style.width = map.cell_size + 'px'
-      this.el_bonus.style.height = map.cell_size + 'px'
-      this.el_bonus.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
-      map.el.appendChild(this.el_bonus)
-    }
-
-    if (this.destructible) {
-      this.el_destructible.style.backgroundPosition = 100 * Math.floor(Math.random() * 7) + '% 0%'
-      this.el_destructible.style.width = map.cell_size + 'px'
-      this.el_destructible.style.height = map.cell_size + 'px'
-      map.el.appendChild(this.el_destructible)
-    }
+    
   }
   destroy() {
-    this.el_destructible.remove()
+    this.destructible = false
+    this.content.classList.remove('destructible')
+  }
+  destroyBonus(){
+    this.bonus = undefined
+    this.content.className = 'content'
+  }
+  checkPoint(neddle, array) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i][0] === neddle[0] && array[i][1] === neddle[1]) {
+        return true
+      }
+    }
+    return false
   }
 }
 
 const map = new Map([37, 23], document.querySelector('.game-container'))
 map.generate()
 map.draw()
-
-function checkPoint(neddle, array) {
-  for (var i = 0; i < array.length; i++) {
-    if (array[i][0] === neddle[0] && array[i][1] === neddle[1]) {
-      return true
-    }
-  }
-  return false
-}
-
-/*
-____ TO DO: ___
-- methode removeBonus que le character puisse appeler quand il est passé sur un bonus, elle enlève le bonus de la map et du DOM
-
-*/

@@ -6,7 +6,7 @@
     background: rgba(0,0,0,2);
     user-select: none;
     .cell{
-        background: url('../img/cell-sprite.png');
+        background: url('../img/cell-sprite-new.png');
         background-size: cover;
         image-rendering: pixelated;
         width: 32px;
@@ -16,33 +16,24 @@
             background: url('../img/solid-sprite.png');
             background-size: cover;
         }
-       &.spawn{
-           //blblblblbblblbl
-        }
-        &.destructible{
-            background: url('../img/dirt-sprite.png');
-            background-size: cover;
-            opacity: 0;
-        }
-        &.bonus{
-            &.speed{
-                background: url('../img/powerup-speed.png');
+        .content{
+            &.spawn{
+            //blblblblbblblbl
+            }
+            &.destructible{
+                background: url('../img/dirt-sprite-new.png');
                 background-size: cover;
             }
-            &.range{
-                background: url('../img/bomb.png');
-                background-size: cover;
-                // animation: image 0.3s infinite alternate-reverse;
+            &.bonus{
+                &.speed{
+                    background: url('../img/powerup-speed.png');
+                    background-size: cover;
+                }
+                &.range{
+                    background: url('../img/bomb.png');
+                    background-size: cover;
+                }
             }
         }
-}
-}
-
-@keyframes image{
-    from{
-        background: url('../img/bomb.png');
-    }
-    to{
-        background: url('../img/bomb-active.png');
     }
 }
