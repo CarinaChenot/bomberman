@@ -58,10 +58,10 @@ class Bomb {
     var position = 0
     let fireAnim = setInterval(() => {
       position = this.renderFire(fire, position)
-    }, 1000)
+    }, 100)
 
     // Reset
-    setTimeout(() => { this.reset(fire, fireAnim) }, 5000)
+    setTimeout(() => { this.reset(fire, fireAnim) }, 500)
   }
   renderFire(fire, position) {
     fire.forEach((elem) => {
