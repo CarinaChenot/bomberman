@@ -8,6 +8,9 @@ class IA extends Character {
     this.div.setAttribute('class', 'character ia')
     this.div.style.top = this.pos.y * map.cell_size + 'px'
     this.div.style.left = this.pos.x * map.cell_size + 'px'
+    this.div.style.height = map.cell_size + 'px'
+    this.div.style.width = map.cell_size + 'px'
+    this.div.style.backgroundSize = map.cell_size*384/32 + 'px'
     document.querySelector('.game-container').appendChild(this.div)
   }
 
@@ -20,7 +23,8 @@ class IA extends Character {
       characters[0].pos.x - this.pos.x < 0 ? this.pos.x -- : this.pos.x ++
       characters[0].pos.y - this.pos.y < 0 ? this.pos.y -- : this.pos.y ++
       super.move()
-    }, 500)
+      console.log(this);
+    }, 100)
   }
 }
 
