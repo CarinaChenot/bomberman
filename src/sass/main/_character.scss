@@ -1,12 +1,8 @@
 .character {
   position: absolute;
   background: url("../img/bomberman-sprite.png");
-  height: 32px;
-  width: 20px;
   overflow: hidden;
-  margin: 0 6px;
-  transform: scale(0.6);
-  transform-origin: center;
   transition: left .1s linear, top .1s linear;
+  image-rendering: pixelated;
   //transition duration changed in js
 }
