@@ -1,4 +1,4 @@
-class  Character {
+class Character {
   constructor(player, pos, keys) {
     this.player = player
     this.keys = keys
@@ -127,8 +127,10 @@ class  Character {
   }
 }
 
-//                                            pos  |    z          s         q         d       space
-var character1 = new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32})
+// //                                            pos  |    z          s         q         d       space
+// var character1 = new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32})
 
-//                                            pos  |         a r r o w    k e y s              enter
-var character2 = new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+// //                                            pos  |         a r r o w    k e y s              enter
+// var character2 = new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+
+let characters = [new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}), new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})]

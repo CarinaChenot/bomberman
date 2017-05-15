@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "wolfy87-eventemitter": "^5.1.0"
   }
 }
