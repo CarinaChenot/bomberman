@@ -49,7 +49,7 @@ gulp.task('sass', () => {
 
 // JS task
 gulp.task('es6', () => {
-  return gulp.src([config.src + 'js/classes/Map.js', config.src + 'js/classes/Bomb.js', config.src + 'js/classes/Character.js', config.src + 'js/main.js'])
+  return gulp.src([config.src + 'js/classes/Map.js', config.src + 'js/classes/Bomb.js', config.src + 'js/classes/Character.js', config.src + 'js/classes/IA.js', config.src + 'js/main.js'])
   .pipe(plumber({
     errorHandler: notify.onError('ES6 Error: <%= error.message %>')
   }))

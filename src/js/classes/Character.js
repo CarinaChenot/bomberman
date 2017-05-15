@@ -10,7 +10,6 @@ class  Character {
     this.anim = {}
     this.anim.step = 0
     this.direction = 'none'
-    // init:
     this.create()
     this.controls()
   }
@@ -18,7 +17,7 @@ class  Character {
   create() {
     this.div = document.createElement('div')
     this.div.setAttribute('class', 'character')
-    this.div.style.top   = this.pos.y * map.cell_size + 'px'
+    this.div.style.top = this.pos.y * map.cell_size + 'px'
     this.div.style.left = this.pos.x * map.cell_size + 'px'
     document.querySelector('.game-container').appendChild(this.div)
   }
@@ -101,18 +100,18 @@ class  Character {
     clearInterval(this.anim.timeout)
     let dirOffset
     switch (this.direction) {
-    case 'left':
-      dirOffset = 0
-      break
-    case 'down':
-      dirOffset = 3
-      break
-    case 'up':
-      dirOffset = 6
-      break
-    default:
-      dirOffset = 9
-      break
+      case 'left':
+        dirOffset = 0
+        break
+      case 'down':
+        dirOffset = 3
+        break
+      case 'up':
+        dirOffset = 6
+        break
+      default:
+        dirOffset = 9
+        break
     }
     this.anim.timeout = setTimeout(() => { // stand without walking
       this.div.style.backgroundPosition = '-' + (dirOffset + 1) * 20 + 'px 0'
