@@ -6,12 +6,12 @@ class Bomb {
     this.isAlive   = true
     this.exploding = false
     this.cell      = map.map[this.pos.y][this.pos.x]
-    this.el        = document.createElement('div')
     this.delay     = 2000
     this.init()
   }
   init() {
     this.cell.content.classList.add('bomb')
+    // this.renderFire()
     setTimeout(() => { this.explode() }, this.delay)
   }
   explode() {
@@ -36,13 +36,24 @@ class Bomb {
     // Spread fire
     fire.forEach((elem) => { elem.content.classList = 'content fire' })
 
+    var position = 0
+    let fireAnim = setInterval(() => {
+      position = this.renderFire(fire, position)
+    }, 100)
+
     // Reset
-    setTimeout(() => { this.reset(fire) }, 500)
+    setTimeout(() => { this.reset(fire, fireAnim) }, 500)
   }
-  reset(fire) {
+  renderFire(fire, position) {
+    fire.forEach((elem) => {
+      elem.content.style.backgroundPositionX = Math.abs(position) * -1 + 'px'
+    })
+    return position += 32
+  }
+  reset(fire, fireAnim) {
+    clearInterval(fireAnim)
     fire.forEach((elem) => { elem.content.classList.remove('fire') })
     this.isAlive = false
-    this.el.remove()
     this.cell.bomb = null
   }
 }
