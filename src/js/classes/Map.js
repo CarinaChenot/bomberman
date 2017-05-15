@@ -111,4 +111,3 @@ class Cell {
 
 const map = new Map([37, 23], document.querySelector('.game-container'))
 map.generate()
-map.draw()
