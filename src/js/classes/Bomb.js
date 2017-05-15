@@ -11,59 +11,92 @@ class Bomb {
   }
   init() {
     this.cell.content.classList.add('bomb')
-    // this.renderFire()
     setTimeout(() => { this.explode() }, this.delay)
   }
   explode() {
     this.exploding = true
 
     let fire = []
-    fire.push(map.map[this.pos.y][this.pos.x])
+    fire.push({
+      coords: this.cell,
+      direction: 'center'
+    })
 
     // Retrieve cells where to add fire
     for (var i = 1; i <= this.range; i++) {
       let axis = [
-        map.map[this.pos.y + Math.abs(i) * -1][this.pos.x],
-        map.map[this.pos.y + Math.abs(i)][this.pos.x],
-        map.map[this.pos.y][this.pos.x + Math.abs(i) * -1],
-        map.map[this.pos.y][this.pos.x + Math.abs(i)]
+        {
+          coords: map.map[this.pos.y + Math.abs(i) * -1][this.pos.x],
+          direction: 'up',
+          border: i === this.range ? true : false
+        },
+        {
+          coords: map.map[this.pos.y + Math.abs(i)][this.pos.x],
+          direction: 'down',
+          border: i === this.range ? true : false
+        },
+        {
+          coords: map.map[this.pos.y][this.pos.x + Math.abs(i) * -1],
+          direction: 'left',
+          border: i === this.range ? true : false
+        },
+        {
+          coords: map.map[this.pos.y][this.pos.x + Math.abs(i)],
+          direction: 'right',
+          border: i === this.range ? true : false
+        }
       ]
+
       axis.forEach((elem) => {
-        if (!elem.solid) { fire.push(elem) }
+        if (!elem.coords.solid) { fire.push(elem) }
       })
     }
 
     // Spread fire
-    fire.forEach((elem) => { elem.content.classList = 'content fire' })
+    fire.forEach((elem) => { elem.coords.content.classList = 'content fire' })
 
     var position = 0
     let fireAnim = setInterval(() => {
       position = this.renderFire(fire, position)
-    }, 100)
+    }, 1000)
 
     // Reset
-    setTimeout(() => { this.reset(fire, fireAnim) }, 500)
+    setTimeout(() => { this.reset(fire, fireAnim) }, 5000)
   }
   renderFire(fire, position) {
     fire.forEach((elem) => {
-      elem.content.style.backgroundPositionX = Math.abs(position) * -1 + 'px'
+      if (elem.border) {
+          elem.coords.content.style.backgroundPositionY = 32 + 'px'
+      } else {
+        elem.coords.content.style.backgroundPositionY = -32 + 'px'
+      }
+      switch (elem.direction) {
+        case 'up':
+          elem.coords.content.style.transform = 'rotate(-90deg)'
+          break;
+        case 'down':
+          elem.coords.content.style.transform = 'rotate(-90deg) scaleX(-1)'
+          break;
+        case 'left':
+          elem.coords.content.style.transform = 'rotate(181deg) scaleY(-1)'
+          break;
+        case 'right':
+          break;
+        case 'center':
+          elem.coords.content.style.backgroundPositionY = 0 + 'px'
+          break;
+      }
+      elem.coords.content.style.backgroundPositionX = Math.abs(position) * -1 + 'px'
     })
     return position += 32
   }
   reset(fire, fireAnim) {
     clearInterval(fireAnim)
-    fire.forEach((elem) => { elem.content.classList.remove('fire') })
+    fire.forEach((elem) => {
+      elem.coords.content.classList.remove('fire')
+      elem.coords.content.style.transform = ''
+    })
     this.isAlive = false
     this.cell.bomb = null
   }
 }
-
-// Test function
-function newBomb() {
-  let pos = {
-    x: Math.floor(Math.random() * 37),
-    y: Math.floor(Math.random() * 23)
-  }
-  map.map[pos.y][pos.x].bomb = new Bomb(1, 1, pos)
-}
-// newBomb()
