@@ -30,6 +30,8 @@ module.exports = {
     'no-multiple-empty-lines': 'error',
     'no-unused-expressions': 'error',
     'comma-spacing': ['error', { 'before': false, 'after': true }],
-    'key-spacing': ['error', { 'mode': 'strict' }]
+    'key-spacing': ['error', { 'mode': 'strict' }],
+    'no-undef': 0,
+    'no-console': 1
   }
 }

@@ -1,41 +1,39 @@
 const electron = require('electron')
 const app = electron.app
-const {Tray, Menu} = electron
 
-let tray = null
 let mainWindow
 
 /**
  * On closed kill app
  */
 function onClosed() {
-	mainWindow = null
+  mainWindow = null
 }
 
 /**
  * Create a Window
  */
 function createMainWindow() {
-	const win = new electron.BrowserWindow({
-		width: 1000,
-		height: 800,
-		minWidth: 600,
-		minHeight: 750
-	})
+  const win = new electron.BrowserWindow({
+    width: 1000,
+    height: 800,
+    minWidth: 600,
+    minHeight: 750
+  })
 
     // App need a server for run
 
-	win.loadURL(`http://localhost:3000/`)
-	win.on('closed', onClosed)
+  win.loadURL('http://localhost:3000/')
+  win.on('closed', onClosed)
 
-	return win
+  return win
 }
 
-app.on('window-all-closed', _ => { if (process.platform !== 'darwin') app.quit() })
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit() })
 
-app.on('activate', _ => { if (!mainWindow) mainWindow = createMainWindow() })
+app.on('activate', () => { if (!mainWindow) mainWindow = createMainWindow() })
 
 /**
  * Launch App
  */
-app.on( 'ready', _ => mainWindow = createMainWindow() )
+app.on('ready', () => mainWindow = createMainWindow())
