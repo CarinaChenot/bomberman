@@ -89,7 +89,7 @@ class Cell {
     this.el_cell.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
     map.el.appendChild(this.el_cell)
 
-    
+
   }
   destroy() {
     this.destructible = false

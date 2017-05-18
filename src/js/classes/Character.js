@@ -16,7 +16,7 @@ class Character {
 
   create() {
     this.div = document.createElement('div')
-    this.div.setAttribute('class', 'character')
+    this.div.setAttribute('class', 'character '+this.player)
     this.div.style.top = this.pos.y * map.cell_size + 'px'
     this.div.style.left = this.pos.x * map.cell_size + 'px'
     this.div.style.height = map.cell_size + 'px'
@@ -71,7 +71,10 @@ class Character {
     if (this.direction === 'left')   nextPos.x -= 1
     if (this.direction === 'right')   nextPos.x += 1
 
-    if (!map.map[nextPos.y][nextPos.x].solid) { // if cell is free:
+    if (
+      !map.map[nextPos.y][nextPos.x].solid &&
+      !map.map[nextPos.y][nextPos.x].destructible
+    ) { // if cell is free:
       this.pos = nextPos
       this.div.style.top   = this.pos.y * map.cell_size + 'px'
       this.div.style.left = this.pos.x * map.cell_size + 'px'
@@ -125,12 +128,29 @@ class Character {
   dropBomb() {
     let bomb = new Bomb(this.player, this.range, this.pos)
   }
+
+  die(){
+    // Dying animation:
+    let i = 0
+    let dieAnim = setInterval( () => {
+      this.div.style.backgroundPosition = '-' +  i * map.cell_size  + 'px ' + map.cell_size + 'px'
+      console.log(this.div.style.backgroundPosition);
+      console.log(i);
+      i++
+    }, 100)
+    setTimeout( () => {
+      this.div.parentElement.removeChild(this.div)
+      characters.splice( characters.indexOf(this), 1 ); //remove from characters
+      clearInterval(dieAnim)
+    }, 7 * 100)
+  }
 }
 
-// //                                            pos  |    z          s         q         d       space
-// var character1 = new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32})
 
-// //                                            pos  |         a r r o w    k e y s              enter
-// var character2 = new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
 
-let characters = [new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}), new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})]
+let characters = [
+  // //                   pos  |    z          s         q         d       space
+  new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}),
+  // //                   pos  |         a r r o w    k e y s              enter
+  new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+]

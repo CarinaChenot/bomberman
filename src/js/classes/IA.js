@@ -28,5 +28,5 @@ class IA extends Character {
   }
 }
 
-var ia = new IA(3, {x: 5, y: 5}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
-ia.goToTarget()
+// var ia = new IA(3, {x: 5, y: 5}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+// ia.goToTarget()

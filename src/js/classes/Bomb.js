@@ -50,6 +50,16 @@ class Bomb {
       axis.forEach((elem) => {
         if (!elem.coords.solid) { fire.push(elem) }
       })
+
+      // Kill the characters
+      axis.forEach(square => {
+        characters.forEach(char => {
+          if( char.pos.x === square.coords.x && char.pos.y === square.coords.y ||
+              char.pos.x === this.pos.x      && char.pos.y === this.pos.y ){
+            char.die();
+          }
+        })
+      })
     }
 
     // Spread fire
