@@ -5,6 +5,7 @@ class Character {
     this.pos = pos
     this.range = 1
     this.speed = 1
+    this.dying = false
 
     this.div
     this.anim = {}
@@ -26,7 +27,7 @@ class Character {
   }
 
   controls() {
-    let moving
+    let moving; // Interval that triggers move()
     window.addEventListener('keydown', (e) => {
       if (e.keyCode === this.keys.bomb) { // bombs
         this.dropBomb()
@@ -36,6 +37,7 @@ class Character {
             if (this.direction !== key) {
               this.direction = key
               this.move()
+              clearInterval(moving)
               moving = setInterval(() => {
                 this.move()
               }, 200 / this.speed)
@@ -92,10 +94,10 @@ class Character {
     }
     if (bonus === 'speed') {
       map.map[this.pos.y][this.pos.x].bonus
-      this.speed *= 1.1
+      this.speed += 0.1
       this.div.style.transitionDuration = 0.2 / this.speed + 's'
       setTimeout(() => {
-        this.speed /= 1.1
+        this.speed -= 0.1
       }, 5000)
       console.log('New speed: ' + this.speed)
     }
@@ -130,20 +132,22 @@ class Character {
   }
 
   die(){
-    // Dying animation:
-    let i = 0
-    let dieAnim = setInterval( () => {
-      this.div.style.backgroundPosition = '-' +  i * map.cell_size  + 'px ' + map.cell_size + 'px'
-      console.log(this.div.style.backgroundPosition);
-      console.log(i);
-      i++
-    }, 100)
-    setTimeout( () => {
-      this.div.parentElement.removeChild(this.div)
-      characters.splice( characters.indexOf(this), 1 ); //remove from characters
-      clearInterval(dieAnim)
-    }, 7 * 100)
+    if(!this.dying) { // prevent multiple calls
+      this.dying = true;
+      // Dying animation:
+      let i = 0
+      let dieAnim = setInterval( () => {
+        this.div.style.backgroundPosition = '-' +  i * map.cell_size  + 'px ' + map.cell_size + 'px'
+        i++
+      }, 100)
+      setTimeout( () => {
+        this.div.parentElement.removeChild(this.div)
+        characters.splice( characters.indexOf(this), 1 ); //remove from characters
+        clearInterval(dieAnim)
+      }, 7 * 100)
+    }
   }
+
 }
 
 
