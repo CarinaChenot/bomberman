@@ -133,7 +133,7 @@ class Character {
 
   die(){
     if(!this.dying) { // prevent multiple calls
-      this.dying = true;
+      this.dying = true
       // Dying animation:
       let i = 0
       let dieAnim = setInterval( () => {
@@ -142,8 +142,9 @@ class Character {
       }, 100)
       setTimeout( () => {
         this.div.parentElement.removeChild(this.div)
-        characters.splice( characters.indexOf(this), 1 ); //remove from characters
+        characters.splice( characters.indexOf(this), 1 ) //remove from characters
         clearInterval(dieAnim)
+        for (let key in this) delete this[key]
       }, 7 * 100)
     }
   }
