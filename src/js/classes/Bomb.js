@@ -10,9 +10,10 @@ class Bomb {
     this.init()
   }
   init() {
+    this.cell.bomb = this
     this.cell.content.classList.add('bomb')
     this.prepare()
-    setTimeout(() => { this.explode() }, this.delay)
+    setTimeout(() => { if (this.isAlive) this.explode() }, this.delay)
   }
   prepare() {
     const directions = ['up', 'down', 'left', 'right']
@@ -40,15 +41,19 @@ class Bomb {
     })
   }
   explode() {
-    this.fire.forEach(cell => {
+    this.isAlive = false
+    this.fire.forEach(elem => {
+      if (elem.cell.bomb !== null && elem.cell.bomb.isAlive) {
+        elem.cell.bomb.explode()
+      }
       // Kill the characters
       characters.forEach(char => {
-        if (char.pos.x === cell.cell.x && char.pos.y === cell.cell.y) {
+        if (char.pos.x === elem.cell.x && char.pos.y === elem.cell.y) {
           char.die()
         }
       })
       // Break the blocks
-      cell.cell.destroy()
+      elem.cell.destroy()
     })
 
     // Spread fire
@@ -95,7 +100,6 @@ class Bomb {
       elem.cell.content.classList.remove('fire')
       elem.cell.content.style.transform = ''
     })
-    this.isAlive = false
     this.cell.bomb = null
   }
 }
