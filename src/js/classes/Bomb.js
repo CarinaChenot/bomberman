@@ -1,7 +1,7 @@
 class Bomb {
   constructor(player, range, pos) {
     this.player    = player
-    this.range     = range
+    this.range     = 2
     this.pos       = pos
     this.isAlive   = true
     this.exploding = false
@@ -22,34 +22,72 @@ class Bomb {
       direction: 'center'
     })
 
-    // Retrieve cells where to add fire
-    for (var i = 1; i <= this.range; i++) {
-      let axis = [
-        {
-          coords: map.map[this.pos.y + Math.abs(i) * -1][this.pos.x],
-          direction: 'up',
-          border: i === this.range ? true : false
-        },
-        {
-          coords: map.map[this.pos.y + Math.abs(i)][this.pos.x],
-          direction: 'down',
-          border: i === this.range ? true : false
-        },
-        {
-          coords: map.map[this.pos.y][this.pos.x + Math.abs(i) * -1],
-          direction: 'left',
-          border: i === this.range ? true : false
-        },
-        {
-          coords: map.map[this.pos.y][this.pos.x + Math.abs(i)],
-          direction: 'right',
-          border: i === this.range ? true : false
-        }
-      ]
+    // const coords = {
+    //   up: map.map[this.pos.y + Math.abs(i) * -1][this.pos.x],
+    //   down: map.map[this.pos.y + Math.abs(i)][this.pos.x],
+    //   left: map.map[this.pos.y][this.pos.x + Math.abs(i) * -1],
+    //   right: map.map[this.pos.y][this.pos.x + Math.abs(i)]
+    // }
 
-      axis.forEach((elem) => {
-        if (!elem.coords.solid) { fire.push(elem) }
+    // Get up firing
+    for (var i = 1; i <= this.range; i++) {
+      let up = map.map[this.pos.y + Math.abs(i) * -1][this.pos.x]
+      if (up.solid) {
+        break
+      }
+      fire.push({
+        coords: up,
+        direction: 'up',
+        border: up.destructible || i === this.range ? true : false
       })
+      if (up.destructible) {
+        break
+      }
+    }
+    // Get down firing
+    for (var i = 1; i <= this.range; i++) {
+      let down = map.map[this.pos.y + Math.abs(i)][this.pos.x]
+      if (down.solid) {
+        break
+      }
+      fire.push({
+        coords: down,
+        direction: 'down',
+        border: down.destructible || i === this.range ? true : false
+      })
+      if (down.destructible) {
+        break
+      }
+    }
+    // Get left firing
+    for (var i = 1; i <= this.range; i++) {
+      let left = map.map[this.pos.y][this.pos.x + Math.abs(i) * -1]
+      if (left.solid) {
+        break
+      }
+      fire.push({
+        coords: left,
+        direction: 'left',
+        border: left.destructible || i === this.range ? true : false
+      })
+      if (left.destructible) {
+        break
+      }
+    }
+    // Get right firing
+    for (var i = 1; i <= this.range; i++) {
+      let right = map.map[this.pos.y][this.pos.x + Math.abs(i)]
+      if (right.solid) {
+        break
+      }
+      fire.push({
+        coords: right,
+        direction: 'right',
+        border: right.destructible || i === this.range ? true : false
+      })
+      if (right.destructible) {
+        break
+      }
     }
 
     fire.forEach(cell => {
@@ -78,25 +116,25 @@ class Bomb {
   renderFire(fire, position) {
     fire.forEach((elem) => {
       if (elem.border) {
-          elem.coords.content.style.backgroundPositionY = 32 + 'px'
+        elem.coords.content.style.backgroundPositionY = 32 + 'px'
       } else {
         elem.coords.content.style.backgroundPositionY = -32 + 'px'
       }
       switch (elem.direction) {
-        case 'up':
-          elem.coords.content.style.transform = 'rotate(-90deg)'
-          break;
-        case 'down':
-          elem.coords.content.style.transform = 'rotate(-90deg) scaleX(-1)'
-          break;
-        case 'left':
-          elem.coords.content.style.transform = 'rotate(181deg) scaleY(-1)'
-          break;
-        case 'right':
-          break;
-        case 'center':
-          elem.coords.content.style.backgroundPositionY = 0 + 'px'
-          break;
+      case 'up':
+        elem.coords.content.style.transform = 'rotate(-90deg)'
+        break
+      case 'down':
+        elem.coords.content.style.transform = 'rotate(-90deg) scaleX(-1)'
+        break
+      case 'left':
+        elem.coords.content.style.transform = 'rotate(181deg) scaleY(-1)'
+        break
+      case 'right':
+        break
+      case 'center':
+        elem.coords.content.style.backgroundPositionY = 0 + 'px'
+        break
       }
       elem.coords.content.style.backgroundPositionX = Math.abs(position) * -1 + 'px'
     })
@@ -113,3 +151,5 @@ class Bomb {
     this.cell.bomb = null
   }
 }
+
+// TODO: Solve pb frame 1 center + détruit après les murs
