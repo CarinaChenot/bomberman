@@ -81,9 +81,6 @@ class Cell {
       if(this.destructible) {
         this.content.className += ' destructible'
       }
-      else if(this.bonus !== undefined) {
-        this.content.className += ' bonus ' + this.bonus
-      }
     }
 
     this.el_cell.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
@@ -94,6 +91,11 @@ class Cell {
   destroy() {
     this.destructible = false
     this.content.classList.remove('destructible')
+  }
+  showBonus(){
+    if (this.bonus !== undefined) {
+      this.content.className += ' bonus ' + this.bonus
+    }
   }
   destroyBonus(){
     this.bonus = undefined
