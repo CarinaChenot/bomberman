@@ -6,6 +6,7 @@ class Character {
     this.range = 1
     this.speed = 1
     this.dying = false
+    this.immortal = false
 
     this.div = null
     this.anim = {}
@@ -72,11 +73,12 @@ class Character {
     if (this.direction === 'up')     nextPos.y -= 1
     if (this.direction === 'down')   nextPos.y += 1
     if (this.direction === 'left')   nextPos.x -= 1
-    if (this.direction === 'right')   nextPos.x += 1
+    if (this.direction === 'right')  nextPos.x += 1
 
     if (
       !map.map[nextPos.y][nextPos.x].solid &&
-      !map.map[nextPos.y][nextPos.x].destructible
+      !map.map[nextPos.y][nextPos.x].destructible &&
+      !map.map[nextPos.y][nextPos.x].bomb
     ) { // if cell is free:
       this.pos = nextPos
       this.div.style.top   = this.pos.y * map.cell_size + 'px'
@@ -133,7 +135,7 @@ class Character {
   }
 
   die() {
-    if (!this.dying) { // prevent multiple calls
+    if (!this.dying && !this.immortal) { // prevent multiple calls
       this.dying = true
       // Dying animation:
       let i = 0
