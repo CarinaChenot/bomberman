@@ -70,9 +70,9 @@ class Bomb {
   renderFire(position) {
     this.fire.forEach(elem => {
       if (elem.border) {
-        elem.cell.content.style.backgroundPositionY = 32 + 'px'
+        elem.cell.content.style.backgroundPositionY = '100%'
       } else {
-        elem.cell.content.style.backgroundPositionY = -32 + 'px'
+        elem.cell.content.style.backgroundPositionY = '-100%'
       }
       switch (elem.direction) {
         case 'up':
@@ -87,12 +87,12 @@ class Bomb {
         case 'right':
           break
         case 'center':
-          elem.cell.content.style.backgroundPositionY = 0 + 'px'
+          elem.cell.content.style.backgroundPositionY = '0%'
           break
       }
-      elem.cell.content.style.backgroundPositionX = Math.abs(position) * -1 + 'px'
+      elem.cell.content.style.backgroundPositionX = Math.abs(position) * -1 + '%'
     })
-    return position += 32
+    return position += 100
   }
   reset(fireAnim) {
     clearInterval(fireAnim)
