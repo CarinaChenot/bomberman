@@ -3,13 +3,13 @@ class Character {
     this.player = player
     this.keys = keys
     this.pos = pos
+
+    this.div = null
+    this.anim = {}
     this.range = 1
     this.speed = 1
     this.dying = false
     this.immortal = false
-
-    this.div = null
-    this.anim = {}
     this.anim.step = 0
     this.direction = 'none'
     this.create()
@@ -147,7 +147,6 @@ class Character {
         this.div.parentElement.removeChild(this.div)
         characters.splice(characters.indexOf(this), 1) // remove from characters
         clearInterval(dieAnim)
-        for (let key in this) delete this[key]
       }, 7 * 100)
     }
   }
