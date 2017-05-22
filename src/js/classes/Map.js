@@ -94,7 +94,8 @@ class Cell {
   }
   showBonus(){
     if (this.bonus !== undefined) {
-      this.content.className += ' bonus ' + this.bonus
+      this.content.classList.add('bonus')
+      this.content.classList.add(this.bonus)
     }
   }
   destroyBonus(){
