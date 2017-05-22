@@ -4,7 +4,7 @@ class Map {
     this.el   = el
     this.cell_size = 32
     if (this.size[0] * this.cell_size > window.innerWidth) {
-      this.cell_size = Math.round((window.innerWidth) / this.size[0]);
+      this.cell_size = Math.round((window.innerWidth) / this.size[0])
     }
     this.el.style.width = this.size[0] * this.cell_size + 'px'
     this.el.style.height = this.size[1] * this.cell_size + 'px'

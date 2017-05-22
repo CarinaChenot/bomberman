@@ -62,13 +62,6 @@ gulp.task('es6', () => {
   .pipe(gulp.dest(config.dist + 'assets/js'))
 })
 
-function reportError(error) {
-  notify().write({
-    title: 'Gulp: ES6',
-    message: 'Error line : ' + error.loc.line + ' in : ' + error.fileName.split('/')[error.fileName.split('/').length - 1]
-  })
-}
-
 // Lint task
 gulp.task('lint', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
@@ -87,6 +80,6 @@ gulp.task('watch', () => {
   gulp.watch([config.src + 'js/classes/*.js', config.src + 'js/*.js'], ['es6'])
 })
 
-gulp.task('default', ['connect', 'watch', 'lint'], () => {
+gulp.task('default', ['connect', 'img', 'sass', 'es6', 'watch', 'lint'], () => {
 
 })

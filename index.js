@@ -23,7 +23,7 @@ function createMainWindow() {
 
     // App need a server for run
 
-  win.loadURL('http://localhost:3000/')
+  // win.loadURL('http://localhost:3000/')
   win.on('closed', onClosed)
 
   return win

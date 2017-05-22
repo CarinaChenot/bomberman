@@ -7,7 +7,7 @@ class Character {
     this.speed = 1
     this.dying = false
 
-    this.div
+    this.div = null
     this.anim = {}
     this.anim.step = 0
     this.direction = 'none'
@@ -17,21 +17,21 @@ class Character {
 
   create() {
     this.div = document.createElement('div')
-    this.div.setAttribute('class', 'character '+this.player)
+    this.div.setAttribute('class', 'character ' + this.player)
     this.div.style.top = this.pos.y * map.cell_size + 'px'
     this.div.style.left = this.pos.x * map.cell_size + 'px'
     this.div.style.height = map.cell_size + 'px'
     this.div.style.width = map.cell_size + 'px'
-    this.div.style.backgroundSize = map.cell_size*384/32 + 'px'
+    this.div.style.backgroundSize = map.cell_size * 384 / 32 + 'px'
     document.querySelector('.game-container').appendChild(this.div)
   }
 
   controls() {
-    let moving; // Interval that triggers move()
+    let moving // Interval that triggers move()
     window.addEventListener('keydown', (e) => {
-      if (e.keyCode === this.keys.bomb) { // bombs
+      if (!this.dying && e.keyCode === this.keys.bomb) { // bombs
         this.dropBomb()
-      }      else { // directions
+      } else { // directions
         Object.keys(this.keys).forEach((key) => {
           if (e.keyCode === this.keys[key]) {
             if (this.direction !== key) {
@@ -46,6 +46,7 @@ class Character {
         })
       }
     }, false)
+
     window.addEventListener('keyup', () => {
       this.direction = 'none'
       clearInterval(moving)
@@ -104,7 +105,7 @@ class Character {
   }
 
   animate() {
-    this.anim.step >= 2 ? this.anim.step = 0 : this.anim.step++
+    this.anim.step = this.anim.step >= 2 ? 0 : this.anim.step++
     clearInterval(this.anim.timeout)
     let dirOffset
     switch (this.direction) {
@@ -131,18 +132,18 @@ class Character {
     let bomb = new Bomb(this.player, this.range, this.pos)
   }
 
-  die(){
-    if(!this.dying) { // prevent multiple calls
+  die() {
+    if (!this.dying) { // prevent multiple calls
       this.dying = true
       // Dying animation:
       let i = 0
-      let dieAnim = setInterval( () => {
+      let dieAnim = setInterval(() => {
         this.div.style.backgroundPosition = '-' +  i * map.cell_size  + 'px ' + map.cell_size + 'px'
         i++
       }, 100)
-      setTimeout( () => {
+      setTimeout(() => {
         this.div.parentElement.removeChild(this.div)
-        characters.splice( characters.indexOf(this), 1 ) //remove from characters
+        characters.splice(characters.indexOf(this), 1) // remove from characters
         clearInterval(dieAnim)
         for (let key in this) delete this[key]
       }, 7 * 100)
@@ -151,11 +152,9 @@ class Character {
 
 }
 
-
-
 let characters = [
   // //                   pos  |    z          s         q         d       space
   new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}),
   // //                   pos  |         a r r o w    k e y s              enter
-  new Character(2, {x: 5, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+  new Character(2, {x: 35, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
 ]
