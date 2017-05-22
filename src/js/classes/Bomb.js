@@ -99,6 +99,7 @@ class Bomb {
     this.fire.forEach(elem => {
       elem.cell.content.classList.remove('fire')
       elem.cell.content.style.transform = ''
+      elem.cell.showBonus()
     })
     this.cell.bomb = null
   }
