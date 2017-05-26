@@ -51,7 +51,7 @@ class Bomb {
       }
       // Kill the characters
       characters.forEach(char => {
-        if (char.pos.x === elem.cell.x && char.pos.y === elem.cell.y) {
+        if (JSON.stringify(char.pos) === JSON.stringify(elem.cell.pos)) {
           char.die()
         }
       })

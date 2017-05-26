@@ -1,7 +1,6 @@
 class Cell {
   constructor(x, y, solid, spawn) {
-    this.x     = x
-    this.y     = y
+    this.pos   = { x, y }
     this.solid = solid
     this.bomb = null
     if ((this.checkPoint([x, y], map.spawn_point) && !this.solid)) {
@@ -49,7 +48,7 @@ class Cell {
       }
     }
 
-    this.el_cell.style.transform = 'translate(' + this.x * map.cell_size + 'px,' + this.y * map.cell_size + 'px)'
+    this.el_cell.style.transform = 'translate(' + this.pos.x * map.cell_size + 'px,' + this.pos.y * map.cell_size + 'px)'
     map.el.appendChild(this.el_cell)
 
 
