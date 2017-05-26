@@ -31,12 +31,14 @@ class IA extends Character {
           this.direction = 'left'
           if (!map.map[this.pos.y][this.pos.x - 1].solid && map.map[this.pos.y][this.pos.x - 1].destructible) {
             super.dropBomb()
+            this.whereIsTheBomb()
           }
           super.move()
         } else {
           this.direction = 'right'
           if (!map.map[this.pos.y][this.pos.x + 1].solid && map.map[this.pos.y][this.pos.x + 1].destructible) {
             super.dropBomb()
+            this.whereIsTheBomb()
           }
           super.move()
         }
@@ -44,12 +46,14 @@ class IA extends Character {
           this.direction = 'up'
           if (!map.map[this.pos.y - 1][this.pos.x].solid && map.map[this.pos.y - 1][this.pos.x].destructible) {
             super.dropBomb()
+            this.whereIsTheBomb()
           }
           super.move()
         } else {
           this.direction = 'down'
           if (!map.map[this.pos.y + 1][this.pos.x].solid && map.map[this.pos.y + 1][this.pos.x].destructible) {
             super.dropBomb()
+            this.whereIsTheBomb()
           }
           super.move()
         }
@@ -59,13 +63,51 @@ class IA extends Character {
     }, 300)
   }
 
-
   die() {
     clearInterval(this.interval)
     super.die()
+  }
+
+  iGoFarAway(bomb) {
+
+    if (!map.map[this.pos.y + 1][this.pos.x].solid) {
+      this.direction = 'down'
+      super.move()
+    } else if (!map.map[this.pos.y - 1][this.pos.x].solid) {
+      this.direction = 'up'
+      super.move()
+    } else if (!map.map[this.pos.y][this.pos.x + 1].solid) {
+      this.direction = 'right'
+      super.move()
+    } else if (!map.map[this.pos.y][this.pos.x - 1].solid) {
+      this.direction = 'left'
+      super.move()
+    }
+  }
+
+
+  whereIsTheBomb() {
+    for (let i = 0; i < map.map.length; i++) {
+      map.map[i].forEach((cell)=>{
+        if (cell.bomb) {
+          if (this.pos.x === cell.bomb.pos.x || this.pos.y === cell.bomb.pos.y) {
+            if (cell.bomb.pos.x <= this.pos.x && this.pos.x <= cell.bomb.pos.x + cell.bomb.range) {
+             this.iGoFarAway(cell.bomb)
+            } else if (cell.bomb.pos.y <= this.pos.y && this.pos.y <= cell.bomb.pos.y + cell.bomb.range) {
+              this.iGoFarAway(cell.bomb)
+            }
+          }
+        }
+      })
+    }
+  }
+
+  iWillSurvive() {
+
   }
 }
 
 var ia = new IA(3, {x: 1, y: 21}, {up: 38,  down: 40, left: 37, right: 39, bomb: 14})
 characters.push(ia)
-ia.goToTarget()
+ia.goToTarget() 
+// ia.whereIsTheBomb()
