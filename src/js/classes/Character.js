@@ -32,6 +32,9 @@ class Character {
   controls() {
     let moving // Interval that triggers move()
     window.addEventListener('keydown', (e) => {
+      if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 37 || e.keyCode === 39) {
+        e.preventDefault()
+      }
       if (!this.dying && e.keyCode === this.keys.bomb) { // bombs
         this.dropBomb()
       } else { // directions
