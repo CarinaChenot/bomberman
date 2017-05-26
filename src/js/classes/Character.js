@@ -80,33 +80,31 @@ class Character {
     if (this.direction === 'left')   nextPos.x -= 1
     if (this.direction === 'right')  nextPos.x += 1
 
-    if (
-      !map.map[nextPos.y][nextPos.x].solid &&
-      !map.map[nextPos.y][nextPos.x].destructible &&
-      !map.map[nextPos.y][nextPos.x].bomb
-    ) { // if cell is free:
+    if (!map.map[nextPos.y][nextPos.x].solid && !map.map[nextPos.y][nextPos.x].destructible && !map.map[nextPos.y][nextPos.x].bomb) {
       this.pos = nextPos
-      this.div.style.top   = this.pos.y * map.cell_size + 'px'
+      this.div.style.top = this.pos.y * map.cell_size + 'px'
       this.div.style.left = this.pos.x * map.cell_size + 'px'
     }
     this.animate()
 
+    if (map.map[this.pos.y][this.pos.x].bonus) {
+      this.getBonus()
+    }
+  }
+  getBonus() {
     let bonus = map.map[this.pos.y][this.pos.x].bonus
-    if (bonus === 'range') {
-      map.map[this.pos.y][this.pos.x].bonus = undefined
-      this.range++
-      setTimeout(() => {
-        this.range--
-      }, 5000)
+    switch (bonus) {
+      case 'range':
+        this.range++
+        break;
+      case 'speed':
+        this.speed+= 0.1
+        break;
+      case 'number':
+        this.capacity++
+        break;
     }
-    if (bonus === 'speed') {
-      map.map[this.pos.y][this.pos.x].bonus
-      this.speed += 0.1
-      this.div.style.transitionDuration = 0.2 / this.speed + 's'
-      setTimeout(() => {
-        this.speed -= 0.1
-      }, 5000)
-    }
+    map.map[this.pos.y][this.pos.x].destroyBonus()
   }
 
   animate() {
