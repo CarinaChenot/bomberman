@@ -15,6 +15,22 @@ class IA extends Character {
     document.querySelector('.game-container').appendChild(this.div)
   }
 
+  // Return an array of available paths
+  getAvailablePaths() {
+    let paths = [
+      map.map[this.pos.y - 1][this.pos.x], // up
+      map.map[this.pos.y + 1][this.pos.x], // down
+      map.map[this.pos.y][this.pos.x - 1], // left
+      map.map[this.pos.y][this.pos.x + 1] // right
+    ]
+    paths = paths.filter((el) => {
+      return !el.solid && !el.destructible && !el.bomb
+      // && !this.danger(el.pos)
+    })
+    return paths
+  }
+
+
   getTarget(tabCharacter) {
     if (tabCharacter.length) {
       return Math.floor(Math.random() * ((tabCharacter.length - 1)))
@@ -31,14 +47,12 @@ class IA extends Character {
           this.direction = 'left'
           if (!map.map[this.pos.y][this.pos.x - 1].solid && map.map[this.pos.y][this.pos.x - 1].destructible) {
             super.dropBomb()
-            this.whereIsTheBomb()
           }
           super.move()
         } else {
           this.direction = 'right'
           if (!map.map[this.pos.y][this.pos.x + 1].solid && map.map[this.pos.y][this.pos.x + 1].destructible) {
             super.dropBomb()
-            this.whereIsTheBomb()
           }
           super.move()
         }
@@ -46,19 +60,20 @@ class IA extends Character {
           this.direction = 'up'
           if (!map.map[this.pos.y - 1][this.pos.x].solid && map.map[this.pos.y - 1][this.pos.x].destructible) {
             super.dropBomb()
-            this.whereIsTheBomb()
           }
           super.move()
         } else {
           this.direction = 'down'
           if (!map.map[this.pos.y + 1][this.pos.x].solid && map.map[this.pos.y + 1][this.pos.x].destructible) {
             super.dropBomb()
-            this.whereIsTheBomb()
           }
           super.move()
         }
       } else {
         this.goToTarget()
+      }
+      while (this.danger(this.pos)) {
+        this.iGoFarAway()
       }
     }, 300)
   }
@@ -68,42 +83,44 @@ class IA extends Character {
     super.die()
   }
 
-  iGoFarAway(bomb) {
-    if (!map.map[this.pos.y + 1][this.pos.x].solid) {
-      this.direction = 'down'
-      super.move()
-    } else if (!map.map[this.pos.y - 1][this.pos.x].solid) {
-      this.direction = 'up'
-      super.move()
-    } else if (!map.map[this.pos.y][this.pos.x + 1].solid) {
-      this.direction = 'right'
-      super.move()
-    } else if (!map.map[this.pos.y][this.pos.x - 1].solid) {
-      this.direction = 'left'
-      super.move()
+  // Chose a path randomly in the array of available paths and go
+  iGoFarAway() {
+    let paths = this.getAvailablePaths()
+    let index = Math.floor((Math.random() * paths.length))
+    switch (paths[index]) {
+      case map.map[this.pos.y - 1][this.pos.x]:
+        this.direction = 'up'
+        break
+      case map.map[this.pos.y + 1][this.pos.x]:
+        this.direction = 'down'
+        break
+      case map.map[this.pos.y][this.pos.x - 1]:
+        this.direction = 'left'
+        break
+      case map.map[this.pos.y][this.pos.x + 1]:
+        this.direction = 'right'
+        break
     }
+    super.move()
   }
 
-  whereIsTheBomb() {
+  // Check if this position is dangerous, return true or false
+  danger(position) {
+    let danger = false
     characters.forEach(char => {
       char.bombs.forEach(bomb => {
-        if (this.pos.x === bomb.pos.x || this.pos.y === bomb.pos.y) {
-          if (bomb.pos.x <= this.pos.x && this.pos.x <= bomb.pos.x + bomb.range) {
-           this.iGoFarAway(bomb)
-          } else if (bomb.pos.y <= this.pos.y && this.pos.y <= bomb.pos.y + bomb.range) {
-            this.iGoFarAway(bomb)
+        bomb.fire.forEach(elem => {
+          if (JSON.stringify(position) == JSON.stringify(elem.cell.pos)) {
+            danger = true
           }
-        }
+        })
       })
     })
-  }
-
-  iWillSurvive() {
-
+    return danger
   }
 }
 
 var ia = new IA(2, {x: 1, y: 21}, {up: 38,  down: 40, left: 37, right: 39, bomb: 14})
 characters.push(ia)
 ia.goToTarget()
-// ia.whereIsTheBomb()
+// ia.danger()
