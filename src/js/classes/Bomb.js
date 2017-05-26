@@ -11,6 +11,9 @@ class Bomb {
   }
   init() {
     this.cell.bomb = this
+    if (characters[this.player] !== undefined) {
+      characters[this.player].bombs.push(this)
+    }
     this.cell.content.classList.add('bomb')
     this.prepare()
     setTimeout(() => { if (this.isAlive) this.explode() }, this.delay)
@@ -102,6 +105,12 @@ class Bomb {
       elem.cell.showBonus()
     })
     this.cell.bomb = null
+    if (characters[this.player]) {
+      let index = characters[this.player].bombs.indexOf(this);
+      if (index > -1) {
+        characters[this.player].bombs.splice(index, 1);
+      }
+    }
   }
 }
 

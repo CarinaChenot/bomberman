@@ -5,6 +5,7 @@ class Character {
     this.pos = pos
 
     this.div = null
+    this.bombs = []
     this.anim = {}
     this.range = 1
     this.speed = 1
@@ -155,7 +156,7 @@ class Character {
 
 let characters = [
   // //                   pos  |    z          s         q         d       space
-  new Character(1, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}),
+  new Character(0, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}),
   // //                   pos  |         a r r o w    k e y s              enter
-  new Character(2, {x: 35, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
+  new Character(1, {x: 35, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
 ]
