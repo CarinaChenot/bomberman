@@ -106,9 +106,9 @@ class Bomb {
     })
     this.cell.bomb = null
     if (characters[this.player]) {
-      let index = characters[this.player].bombs.indexOf(this);
+      let index = characters[this.player].bombs.indexOf(this)
       if (index > -1) {
-        characters[this.player].bombs.splice(index, 1);
+        characters[this.player].bombs.splice(index, 1)
       }
     }
   }

@@ -69,7 +69,6 @@ class IA extends Character {
   }
 
   iGoFarAway(bomb) {
-
     if (!map.map[this.pos.y + 1][this.pos.x].solid) {
       this.direction = 'down'
       super.move()
@@ -85,21 +84,18 @@ class IA extends Character {
     }
   }
 
-
   whereIsTheBomb() {
-    for (let i = 0; i < map.map.length; i++) {
-      map.map[i].forEach((cell)=>{
-        if (cell.bomb) {
-          if (this.pos.x === cell.bomb.pos.x || this.pos.y === cell.bomb.pos.y) {
-            if (cell.bomb.pos.x <= this.pos.x && this.pos.x <= cell.bomb.pos.x + cell.bomb.range) {
-             this.iGoFarAway(cell.bomb)
-            } else if (cell.bomb.pos.y <= this.pos.y && this.pos.y <= cell.bomb.pos.y + cell.bomb.range) {
-              this.iGoFarAway(cell.bomb)
-            }
+    characters.forEach(char => {
+      char.bombs.forEach(bomb => {
+        if (this.pos.x === bomb.pos.x || this.pos.y === bomb.pos.y) {
+          if (bomb.pos.x <= this.pos.x && this.pos.x <= bomb.pos.x + bomb.range) {
+           this.iGoFarAway(bomb)
+          } else if (bomb.pos.y <= this.pos.y && this.pos.y <= bomb.pos.y + bomb.range) {
+            this.iGoFarAway(bomb)
           }
         }
       })
-    }
+    })
   }
 
   iWillSurvive() {
@@ -107,7 +103,7 @@ class IA extends Character {
   }
 }
 
-var ia = new IA(3, {x: 1, y: 21}, {up: 38,  down: 40, left: 37, right: 39, bomb: 14})
+var ia = new IA(2, {x: 1, y: 21}, {up: 38,  down: 40, left: 37, right: 39, bomb: 14})
 characters.push(ia)
-ia.goToTarget() 
+ia.goToTarget()
 // ia.whereIsTheBomb()
