@@ -6,6 +6,7 @@ class Character {
 
     this.div = null
     this.bombs = []
+    this.capacity = 1
     this.anim = {}
     this.range = 1
     this.speed = 1
@@ -94,7 +95,6 @@ class Character {
       setTimeout(() => {
         this.range--
       }, 5000)
-      console.log('New range: ' + this.range)
     }
     if (bonus === 'speed') {
       map.map[this.pos.y][this.pos.x].bonus
@@ -103,7 +103,6 @@ class Character {
       setTimeout(() => {
         this.speed -= 0.1
       }, 5000)
-      console.log('New speed: ' + this.speed)
     }
   }
 
@@ -112,18 +111,18 @@ class Character {
     clearInterval(this.anim.timeout)
     let dirOffset
     switch (this.direction) {
-    case 'left':
-      dirOffset = 0
-      break
-    case 'down':
-      dirOffset = 3
-      break
-    case 'up':
-      dirOffset = 6
-      break
-    default:
-      dirOffset = 9
-      break
+      case 'left':
+        dirOffset = 0
+        break
+      case 'down':
+        dirOffset = 3
+        break
+      case 'up':
+        dirOffset = 6
+        break
+      default:
+        dirOffset = 9
+        break
     }
     this.anim.timeout = setTimeout(() => { // stand without walking
       this.div.style.backgroundPosition = '-' + (dirOffset + 1) * map.cell_size + 'px 0'
@@ -132,7 +131,9 @@ class Character {
   }
 
   dropBomb() {
-    let bomb = new Bomb(this.player, this.range, this.pos)
+    if (this.bombs.length < this.capacity) {
+      let bomb = new Bomb(this.player, this.range, this.pos)
+    }
   }
 
   die() {
