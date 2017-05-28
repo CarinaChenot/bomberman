@@ -3,11 +3,11 @@ class Settings {
   constructor(timer = "1'", map_size = 'medium', nb_players = 2, nb_AI = 2) {
     this.timer = parseInt(timer);
     if (map_size === 'small') {
-      this.map_size = [10, 10]
+      this.map_size = [17, 11]
     } else if (map_size === 'medium') {
-      this.map_size = [15, 15]
+      this.map_size = [23, 17]
     } else if (map_size === 'big') {
-      this.map_size = [20, 20]
+      this.map_size = [37, 23]
     }
     this.nb_players = nb_players
     this.nb_AI = nb_AI
@@ -24,7 +24,8 @@ settings.button.onclick = function () {
   let nb_players = settings.div.querySelector('.players button.selected').innerHTML
   let nb_AI = settings.div.querySelector('.ai button.selected').innerHTML
   const game = new Settings(timer, map_size, nb_players, nb_AI)
-  console.log(game)
+  settings.div.parentNode.classList.add('hide')
+  start_game(game);
 }
 settings.timer_div = settings.div.querySelectorAll('.timer button')
 settings.size_div = settings.div.querySelectorAll('.size button')
@@ -48,3 +49,9 @@ settings.select(settings.timer_div)
 settings.select(settings.size_div)
 settings.select(settings.players_div)
 settings.select(settings.ai_div)
+
+function start_game(settings) {
+  const map = new Map(settings.map_size, document.querySelector('.game-container'))
+  map.generate()
+  
+}

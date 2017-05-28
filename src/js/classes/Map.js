@@ -32,5 +32,5 @@ class Map {
   }
 }
 
-const map = new Map([37, 23], document.querySelector('.game-container'))
-map.generate()
+// const map = new Map([37, 23], document.querySelector('.game-container'))
+// map.generate()
