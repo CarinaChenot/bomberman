@@ -32,7 +32,7 @@ class Character {
   controls() {
     let moving // Interval that triggers move()
     window.addEventListener('keydown', (e) => {
-      if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 37 || e.keyCode === 39) {
+      if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 32) {
         e.preventDefault()
       }
       if (!this.dying && e.keyCode === this.keys.bomb) { // bombs
@@ -156,9 +156,4 @@ class Character {
 
 }
 
-let characters = [
-  // //                   pos  |    z          s         q         d       space
-  new Character(0, {x: 1, y: 1}, {up: 90,  down: 83, left: 81, right: 68, bomb: 32}),
-  // //                   pos  |         a r r o w    k e y s              enter
-  new Character(1, {x: 35, y: 1}, {up: 38,  down: 40, left: 37, right: 39, bomb: 13})
-]
+const characters = []

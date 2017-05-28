@@ -9,9 +9,15 @@ class Settings {
     } else if (map_size === 'big') {
       this.map_size = [37, 23]
     }
-    this.nb_players = nb_players
-    this.nb_AI = nb_AI
+    this.nb_players = parseInt(nb_players)
+    this.nb_AI = parseInt(nb_AI)
     this.game_status = true
+    this.player_control = [
+      [90, 83, 81, 68, 69],
+      [38, 40, 37, 39, 16],      
+      [78, 23, 47, 293, 10],
+      [79, 24, 48, 294, 11],
+    ]
   }
 }
 
@@ -25,7 +31,7 @@ settings.button.onclick = function () {
   let nb_AI = settings.div.querySelector('.ai button.selected').innerHTML
   const game = new Settings(timer, map_size, nb_players, nb_AI)
   settings.div.parentNode.classList.add('hide')
-  start_game(game);
+  startGame(game)
 }
 settings.timer_div = settings.div.querySelectorAll('.timer button')
 settings.size_div = settings.div.querySelectorAll('.size button')
@@ -50,8 +56,20 @@ settings.select(settings.size_div)
 settings.select(settings.players_div)
 settings.select(settings.ai_div)
 
-function start_game(settings) {
-  const map = new Map(settings.map_size, document.querySelector('.game-container'))
+
+function startGame(settings) {
+  map.size = settings.map_size
+  map.setWidth()
   map.generate()
-  
+  for (let i = 0; i < settings.nb_players ; i++) {
+    characters[characters.length] = new Character(i, {x: map.spawn_point[i][0], y: map.spawn_point[i][1]}, {up: settings.player_control[i][0],  down: settings.player_control[i][1], left: settings.player_control[i][2], right: settings.player_control[i][3], bomb: settings.player_control[i][4]})
+  }
+
+
+  for (let j = settings.nb_players; j < settings.nb_AI + settings.nb_players ; j++){
+    if (characters.length < 4) {
+      characters[characters.length] = new IA(j, {x: map.spawn_point[j][0], y: map.spawn_point[j][1] }, {up: 380,  down: 400, left: 370, right: 390, bomb: 140})
+      characters[characters.length - 1].goToTarget()
+    }
+  }
 }

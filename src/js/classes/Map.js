@@ -3,14 +3,17 @@ class Map {
     this.size = size
     this.el   = el
     this.cell_size = 32
+  }
+  setWidth() {
     if (this.size[0] * this.cell_size > window.innerWidth) {
       this.cell_size = Math.round((window.innerWidth) / this.size[0])
     }
     this.el.style.width = this.size[0] * this.cell_size + 'px'
     this.el.style.height = this.size[1] * this.cell_size + 'px'
+
     this.spawn_point = [
             [1, 1],
-            [this.size[0] - 2, 1],
+            [(this.size[0] - 2), 1],
             [1, this.size[1] - 2],
             [this.size[0] - 2, this.size[1] - 2]
     ]
@@ -32,5 +35,4 @@ class Map {
   }
 }
 
-// const map = new Map([37, 23], document.querySelector('.game-container'))
-// map.generate()
+const map = new Map([37, 23], document.querySelector('.game-container'))

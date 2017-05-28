@@ -119,8 +119,3 @@ class IA extends Character {
     return danger
   }
 }
-
-var ia = new IA(2, {x: 1, y: 21}, {up: 38,  down: 40, left: 37, right: 39, bomb: 14})
-characters.push(ia)
-ia.goToTarget()
-// ia.danger()
