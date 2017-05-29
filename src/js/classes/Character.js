@@ -86,7 +86,6 @@ class Character {
       // this.div.style.top = this.pos.y * map.cell_size + 'px'
       // this.div.style.left = this.pos.x * map.cell_size + 'px'
       this.div.style.transform = 'translateX('+ this.pos.x * map.cell_size +'px) translateY('+ this.pos.y * map.cell_size+'px)'
-      console.log(this.div.style.transform);
     }
     this.animate()
 
@@ -154,8 +153,6 @@ class Character {
         characters.splice(characters.indexOf(this), 1) // remove from characters
         clearInterval(dieAnim)
         if(characters.length === 1){
-          console.log('DIEIIIIER')
-          console.log(characters.length)
           document.querySelector('.game-over-frame').classList.add('active')
           document.querySelector('.game-over-player').innerHTML = characters[0].player+1
         }
