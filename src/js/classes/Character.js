@@ -150,6 +150,12 @@ class Character {
         this.div.parentElement.removeChild(this.div)
         characters.splice(characters.indexOf(this), 1) // remove from characters
         clearInterval(dieAnim)
+        if(characters.length === 1){
+          console.log('DIEIIIIER')
+          console.log(characters.length)
+          document.querySelector('.game-over-frame').classList.add('active')
+          document.querySelector('.game-over-player').innerHTML = characters[0].player+1
+        }
       }, 7 * 100)
     }
   }

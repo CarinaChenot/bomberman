@@ -44,6 +44,9 @@
         text-transform: uppercase;
       }
     }
+    .timer{
+      display: none;
+    }
     button {
       height: 30px;
       line-height: 32px;
@@ -63,5 +66,26 @@
         color: #1D2D44;
       }
     }
+  }
+}
+.game-over-frame{
+  font-family: 'Minecraftia', sans-serif;  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.7);
+  z-index: 100;
+  display: none;
+  color: #F1F1F1;
+  text-transform: uppercase;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: 40px;
+
+  &.active{
+    display: flex;
   }
 }
