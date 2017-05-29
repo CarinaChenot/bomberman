@@ -28,4 +28,5 @@ A JavaScript based bomberman game.
 ```Shell
 cd bomberman
 npm install
+gulp
 ```
