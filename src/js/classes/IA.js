@@ -85,8 +85,13 @@ class IA extends Character {
         clearInterval(this.interval)
         this.goToTarget()
       }
+      var test = 0
       while (this.danger(this.pos)) {
+        test++
         this.iGoFarAway()
+        if (test > 5) {
+          break
+        }
       }
     }, 300)
   }
