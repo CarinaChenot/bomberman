@@ -58,6 +58,7 @@ settings.select(settings.ai_div)
 
 
 function startGame(settings) {
+  resetGame()
   map.size = settings.map_size
   map.setWidth()
   map.generate()
@@ -72,4 +73,8 @@ function startGame(settings) {
       characters[characters.length - 1].goToTarget()
     }
   }
+}
+
+function resetGame(){
+  characters = []
 }

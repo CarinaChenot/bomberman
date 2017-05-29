@@ -3,10 +3,11 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: #F1F1F1;
+  background: #1D2D44;
   display: flex;
   flex-direction: column;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Minecraftia', sans-serif;
+  color: #F1F1F1;
   &.hide{
     display: none;
   }
@@ -18,24 +19,49 @@
     div,
     button {
       margin: 15px 0;
-      width: 300px;
       p {
         margin: 10px 0;
         font-size: 18pt;
       }
       button {
         margin: 0 10px;
-        width: auto;
+        width: 30px;
         transition: all .3s ease;
+        opacity: 0.7;
+        border: 1px solid rgba(255,255,255,0);        
         &.selected {
           font-weight: bold;
           transform: scale(1.4);
+          opacity: 1;
+          border: 1px solid rgba(255,255,255,.4);
         }
+      }
+    }
+    .size{
+      button{
+        width: 100px;
+        margin: 0  20px;
+        text-transform: uppercase;
       }
     }
     button {
       height: 30px;
-      cursor: pointer;            
+      line-height: 32px;
+      cursor: pointer;
+      background: rgba(255,255,255,.1);
+      border-radius: 3px;
+      border: none;
+      outline: none;
+      color: #F1F1F1;
+      font-family: 'Minecraftia', sans-serif;
+      &.start{
+        height: 50px;
+        line-height: 70px;
+        padding: 0;
+        font-size: 20pt;
+        background: #F1F1F1;
+        color: #1D2D44;
+      }
     }
   }
 }

@@ -16,15 +16,13 @@ class Cell {
     } else if (!this.solid) {
       this.destructible = true
 
-      let random = Math.ceil(Math.random() * 12)
+      let random = Math.ceil(Math.random() * 10)
       if (random === 1) {
         this.bonus = 'speed'
       } else if (random === 2) {
         this.bonus = 'range'
       } else if (random === 3) {
         this.bonus = 'number'
-      } else if (random === 4) {
-        this.bonus = 'control'
       }
     }
   }

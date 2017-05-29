@@ -30,9 +30,7 @@ html, body{
             background-size: cover;
         }
         .content{
-            &.spawn{
-            //blblblblbblblbl
-            }
+            background-size: cover;            
             &.destructible{
                 background: url('../img/dirt-sprite-new.png');
                 background-size: cover;
@@ -40,11 +38,12 @@ html, body{
             &.bonus{
                 &.speed{
                     background: url('../img/powerup-speed.png');
-                    background-size: cover;
                 }
                 &.range{
-                    background: url('../img/bomb.png');
-                    background-size: cover;
+                    background: url('../img/powerup-range.png');
+                }
+                &.number{
+                    background: url('../img/powerup-number.png');
                 }
             }
         }
