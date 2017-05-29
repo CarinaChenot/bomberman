@@ -2,10 +2,10 @@
   position: absolute;
   background: url("../img/character-sprite.png");
   overflow: hidden;
-  transition: left .1s linear, top .1s linear;
+  transition: transform .1s linear;
   image-rendering: pixelated;
   //transition duration changed in js
   &.ia{
-    background: url("../img/ai-sprite.png");    
+    background: url("../img/ai-sprite.png");
   }
 }

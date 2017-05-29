@@ -21,8 +21,9 @@ class Character {
   create() {
     this.div = document.createElement('div')
     this.div.setAttribute('class', 'character ' + this.player)
-    this.div.style.top = this.pos.y * map.cell_size + 'px'
-    this.div.style.left = this.pos.x * map.cell_size + 'px'
+    // this.div.style.top = this.pos.y * map.cell_size + 'px'
+    // this.div.style.left = this.pos.x * map.cell_size + 'px'
+    this.div.style.transform = 'translateX('+ this.pos.x * map.cell_size+'px) translateY('+this.pos.y * map.cell_size+'px)'
     this.div.style.height = map.cell_size + 'px'
     this.div.style.width = map.cell_size + 'px'
     this.div.style.backgroundSize = map.cell_size * 384 / 32 + 'px'
@@ -82,8 +83,10 @@ class Character {
 
     if (!map.map[nextPos.y][nextPos.x].solid && !map.map[nextPos.y][nextPos.x].destructible && !map.map[nextPos.y][nextPos.x].bomb) {
       this.pos = nextPos
-      this.div.style.top = this.pos.y * map.cell_size + 'px'
-      this.div.style.left = this.pos.x * map.cell_size + 'px'
+      // this.div.style.top = this.pos.y * map.cell_size + 'px'
+      // this.div.style.left = this.pos.x * map.cell_size + 'px'
+      this.div.style.transform = 'translateX('+ this.pos.x * map.cell_size +'px) translateY('+ this.pos.y * map.cell_size+'px)'
+      console.log(this.div.style.transform);
     }
     this.animate()
 

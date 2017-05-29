@@ -7,8 +7,7 @@ class IA extends Character {
   create() {
     this.div = document.createElement('div')
     this.div.setAttribute('class', 'character ia')
-    this.div.style.top = this.pos.y * map.cell_size + 'px'
-    this.div.style.left = this.pos.x * map.cell_size + 'px'
+    this.div.style.transform = 'translateX('+ this.pos.x * map.cell_size+'px) translateY('+this.pos.y * map.cell_size+'px)'
     this.div.style.height = map.cell_size + 'px'
     this.div.style.width = map.cell_size + 'px'
     this.div.style.backgroundSize = map.cell_size * 384 / 32 + 'px'
@@ -62,7 +61,7 @@ class IA extends Character {
             super.dropBomb()
           } else if (this.destroyPlayer()) {
             super.dropBomb()
-          } 
+          }
           super.move()
         }
         if (characters[this.target].pos.y - this.pos.y < 1) {
