@@ -20,6 +20,7 @@ A JavaScript based bomberman game.
 ### Dev specs
 
 * JavaScript (ES6)
+* Sass
 * Gulp
 * ESLint
 
