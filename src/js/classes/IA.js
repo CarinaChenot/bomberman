@@ -33,7 +33,12 @@ class IA extends Character {
 
   getTarget(tabCharacter) {
     if (tabCharacter.length) {
-      return Math.floor(Math.random() * ((tabCharacter.length - 1)))
+      let rand = Math.floor(Math.random() * ((tabCharacter.length - 1)))
+      if (tabCharacter[rand] === this) {
+        this.getTarget(tabCharacter)
+      } else {
+        return rand
+      }
     } else {
       return false
     }
@@ -43,9 +48,11 @@ class IA extends Character {
     this.target = this.getTarget(characters)
     this.interval = setInterval(() => {
       if (characters[this.target] && !characters[this.target].dying) {
-        if (characters[this.target].pos.x - this.pos.x < 2) {
+        if (characters[this.target].pos.x - this.pos.x < 1) {
           this.direction = 'left'
           if (!map.map[this.pos.y][this.pos.x - 1].solid && map.map[this.pos.y][this.pos.x - 1].destructible) {
+            super.dropBomb()
+          } else if (this.destroyPlayer()) {
             super.dropBomb()
           }
           super.move()
@@ -53,12 +60,16 @@ class IA extends Character {
           this.direction = 'right'
           if (!map.map[this.pos.y][this.pos.x + 1].solid && map.map[this.pos.y][this.pos.x + 1].destructible) {
             super.dropBomb()
-          }
+          } else if (this.destroyPlayer()) {
+            super.dropBomb()
+          } 
           super.move()
         }
-        if (characters[this.target].pos.y - this.pos.y < 2) {
+        if (characters[this.target].pos.y - this.pos.y < 1) {
           this.direction = 'up'
           if (!map.map[this.pos.y - 1][this.pos.x].solid && map.map[this.pos.y - 1][this.pos.x].destructible) {
+            super.dropBomb()
+          } else if (this.destroyPlayer()) {
             super.dropBomb()
           }
           super.move()
@@ -66,10 +77,13 @@ class IA extends Character {
           this.direction = 'down'
           if (!map.map[this.pos.y + 1][this.pos.x].solid && map.map[this.pos.y + 1][this.pos.x].destructible) {
             super.dropBomb()
+          } else if (this.destroyPlayer()) {
+            super.dropBomb()
           }
           super.move()
         }
       } else {
+        clearInterval(this.interval)
         this.goToTarget()
       }
       while (this.danger(this.pos)) {
@@ -81,6 +95,27 @@ class IA extends Character {
   die() {
     clearInterval(this.interval)
     super.die()
+  }
+
+  destroyPlayer() {
+    if (characters[this.target]) {
+      if (this.pos.y === characters[this.target].pos.y) {
+        if (this.pos.x >= characters[this.target].pos.x) {
+          return this.pos.x - characters[this.target].pos.x <= this.range
+        }
+        if (this.pos.x < characters[this.target].pos.x) {
+          return this.pos.x - characters[this.target].pos.x <= this.range * -1
+        }
+      }
+      if (this.pos.x === characters[this.target].pos.x) {
+        if (this.pos.y >= characters[this.target].pos.y) {
+          return this.pos.y - characters[this.target].pos.y <= this.range
+        }
+        if (this.pos.y < characters[this.target].pos.y) {
+          return this.pos.y - characters[this.target].pos.y <= this.range * -1
+        }
+      }
+    }
   }
 
   // Chose a path randomly in the array of available paths and go
